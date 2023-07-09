@@ -3,3 +3,21 @@
 // 78 -> третьей цифры нет
 // 32679 -> 6
 
+Console.Write("Введите число ");
+int inputNumber = Convert.ToInt32(Console.ReadLine()); // Сделал так, чтобы это число отобразить в ответе
+int number1 = inputNumber; // А с этой переменной производить вычисления
+
+// Проверка по условию
+if (number1<100) Console.WriteLine("Третьей цифры нет"); // вывод текста, если 3й цифры нет
+else {
+
+    // Убираем циклом все числа левее третьего))
+    while (number1>1000){
+        number1 = number1/10;
+    }
+
+    // Когда убрали лишние цифры, берем остаток от деления - это и есть наше число
+    int thirdNumber = number1 % 10;
+
+    Console.WriteLine($"В числе {inputNumber} третья цифра - {thirdNumber}");
+}
