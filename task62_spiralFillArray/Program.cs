@@ -37,6 +37,40 @@ string ConvertNumberToString(int number)
 
 }
 
+bool CheckNumber (int n, int m)
+{
+    if (m>n)
+    {
+        int temp = m;
+        m = n;
+        n = temp;
+    }
+
+    if (n%2 == 0)
+    {
+        if ((n-m) > 1) return true;
+        else return false;
+    }
+    else return false;
+}
+
+bool CheckNumberTwo (int n, int m)
+{
+    if (m>n)
+    {
+        int temp = m;
+        m = n;
+        n = temp;
+    }
+
+    if (n%2 != 0)
+    {
+        if ((n-m) > 1) return true;
+        else return false;
+    }
+    else return false;
+}
+
 // ---- Заполнение массива по спирали ----
 
 string[,] FillArray(int n, int m)
@@ -57,6 +91,8 @@ string[,] FillArray(int n, int m)
     //Деленное на 2, потому что кольцо состоит из 2х строк
 
     if (m < n) roundsCounter = m/2; // если количество столбцов меньше чем строк, то тогда будем считать кольца по столбцам
+
+    if (CheckNumber(n,m)) roundsCounter = roundsCounter-1;
 
     int number = 1; // первое число в матрице - 1
 
@@ -86,8 +122,9 @@ string[,] FillArray(int n, int m)
         // --- НАЧИНАЕМ ЗАПОЛНЯТЬ КОЛЬЦА ------
 
         // Запускаем движение по горизонтали, слева направо
+        
         for (int i = yStart; i < yFinish; i++)
-        {
+        {   
             matrix[xStart, i] = ConvertNumberToString (number); // выбираем ячейку и кладем туда конвертированное число
             number++; // Добавляем к числу 1, так как следующее число должно быть по порядку
         }
@@ -99,6 +136,7 @@ string[,] FillArray(int n, int m)
         {
             matrix[j, yFinish] = ConvertNumberToString (number);
             number++;
+            
         }
 
         // Как дошли до низу, начинаем движение по горизонтали справа налево
@@ -107,19 +145,26 @@ string[,] FillArray(int n, int m)
         {
             matrix[xFinish, k] = ConvertNumberToString (number);
             number++;
+
         }
 
         // как дошли до крайней точки по горизонтали, поднимаемся снизу вверх
 
         for (int l = xFinish; l > xStart; l--)
-        {
-            matrix[l, yStart] = ConvertNumberToString (number);
-            number++;
-        }
-
+                {
+                    matrix[l, yStart] = ConvertNumberToString (number);
+                    number++;
+                    
+                }
+        
+        
         // После заполнения кольца, выбираем следующее кольцо и тд до конца
 
+        if (CheckNumberTwo(n,m) && roundsCounter == rounds) {matrix[n/2, m/2] = ConvertNumberToString (number-3);}
+
     }
+
+    
 
 
     return matrix;
